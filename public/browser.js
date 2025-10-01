@@ -5,7 +5,6 @@ const prevMonthBtn = document.getElementById('prev-month');
 const nextMonthBtn = document.getElementById('next-month');
 const yearSelector = document.getElementById('year-selector');
 const monthSelector = document.getElementById('month-selector');
-const days = document.querySelectorAll(".cal-day");
 
 // Getting the dates
 let date = new Date();
@@ -18,6 +17,41 @@ const months = [
 "May", "June", "July", "August", 
 "September", "October", "November", "December"
 ];
+
+// Displays the modal along with the response message
+function showOverlay(message) {
+    document.getElementById("overlay-text").textContent = message;
+    document.getElementById("overlay").style.display = "flex";
+}
+  
+// Close button handler for modal
+document.getElementById("overlay-close").addEventListener("click", () => {
+    document.getElementById("overlay").style.display = "none";
+});
+
+// Closes the modal if click is detected outside the modal
+document.getElementById("main").addEventListener("click", () => {
+    document.getElementById("overlay").style.display = "none";
+});
+
+function sendDate(date) {
+
+    // Send the date to the back-end
+    fetch("server.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          date: date
+        })
+      })
+      // Receive response from the back-end and decode it then call showOverlay to display it, unless there's an error which is caught
+      .then(r => r.json())
+      .then(data => {
+        showOverlay(data.reply);
+      })
+      .catch(err => console.error("GPT request failed: ", err));
+
+}
 
 // Function that dynamically renders the calendar based on the chosen month and year
 function renderCalendar(month, year) {
@@ -42,6 +76,13 @@ function renderCalendar(month, year) {
       const day = document.createElement("button");
       day.textContent = i;
       day.classList.add("cal-day");
+      calendarDates.appendChild(day);
+
+      // Send the date to the sendDate() function on click
+      day.addEventListener("click", () => {
+        const date = new Date(currentYear, currentMonth, i).toISOString().split("T")[0];
+        sendDate(date);
+      });
       calendarDates.appendChild(day);
     }
 }
@@ -100,13 +141,6 @@ nextMonthBtn.addEventListener("click", () => {
     renderCalendar(currentMonth, currentYear);
 });
 
-// Event listener for each day, currently just testing it
-days.forEach(element => {
-    element.addEventListener("click", () => {
-        console.log(element.textContent);
-    }); 
-})
-
 // Event listeners for the dropdowns
 yearSelector.addEventListener('change', function(event) {
 
@@ -133,3 +167,5 @@ fillMonthsMenu();
 
 yearSelector.value = currentYear;
 monthSelector.value = months[currentMonth];
+
+const days = document.querySelectorAll(".cal-day");

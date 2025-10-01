@@ -6,7 +6,7 @@
     <title>Calendar</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body id="main">
     <div class="calendar-container">
         <div class="calendar-header">
             <button id="prev-month">&lt;</button>
@@ -31,6 +31,12 @@
             <!-- Days are dynamically inserted by JavaScript -->
         </div>
     </div>
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+          <span id="overlay-close">&times;</span>
+          <div id="overlay-text"></div>
+        </div>
+      </div>
     <script src="browser.js"></script>
 </body>
 </html>
