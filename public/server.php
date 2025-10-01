@@ -20,7 +20,7 @@ try {
     $prompt = "Give me a list of 3 important events that occurred on this date: {$date}";
 
     // API key, trimming it to get rid of any unnecessary spaces 
-    $apiKey = trim("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");
+    $apiKey = trim("YourKey");
 
     // Choosing model, setting personality, sending prompt, and setting maximum tokens amount since it costs money
     $payload = [
