@@ -20,3 +20,5 @@
 - Days are dynamically populated with **JavaScript** when a month is selected to account for leap years.
 - Leading/trailing whitespace is added so months always align to a full week (Sunday → Saturday) for aesthetics.
 - Each day is rendered as a **button** so it can be clicked to trigger the modal.
+
+<img width="941" height="669" alt="Screenshot 2025-10-01 at 8 06 42 PM" src="https://github.com/user-attachments/assets/047b8f1a-c485-4450-bb01-35493d6ee90e" />
